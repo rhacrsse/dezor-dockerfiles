@@ -1,0 +1,24 @@
+FROM debian:11.2
+LABEL maintainer "Angelo Claudio Re <rhacrsse@linux.com>"
+
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    HOME=/home/user
+
+COPY Dezor-v1.2.9-x86_64.AppImage /usr/local/bin/
+
+RUN useradd --create-home --home-dir $HOME user && \
+    chown -R user:user $HOME && \
+    chown -R user:user /usr/local/bin && \
+    chmod 0744 /usr/local/bin/Dezor-v1.2.9-x86_64.AppImage && \
+    apt -y update && \
+    #apt install -y pipewire pipewire-alsa alsa-utils && \
+    apt install -y pipewire alsa-utils xdg-utils && \
+    apt install -y libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libgtk-3-0 libgbm1 && \
+    cd /usr/local/bin/; ./Dezor-v1.2.9-x86_64.AppImage  --appimage-extract && \
+    chown -R user:user /usr/local/bin/squashfs-root
+
+WORKDIR $HOME
+USER user
+
+CMD ["/usr/local/bin/squashfs-root/AppRun"]

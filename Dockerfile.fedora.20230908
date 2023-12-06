@@ -1,0 +1,24 @@
+FROM fedora:38
+LABEL maintainer "Angelo Claudio Re <rhacrsse@linux.com>"
+
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ENV HOME /home/user
+RUN useradd --create-home --home-dir $HOME user \
+	&& chown -R user:user $HOME
+
+COPY Dezor-v1.2.9-x86_64.AppImage /usr/local/bin/
+
+RUN chown -R user:user /usr/local/bin \
+    && chmod 0744 /usr/local/bin/Dezor-v1.2.9-x86_64.AppImage
+RUN yum install -y pipewire pipewire-alsa alsa-utils
+RUN yum install -y nss atk at-spi2-atk cups libdrm gtk3 mesa-libgbm
+
+RUN cd /usr/local/bin/; ./Dezor-v1.2.9-x86_64.AppImage  --appimage-extract
+RUN chown -R user:user /usr/local/bin/squashfs-root
+
+WORKDIR $HOME
+USER user
+
+ENTRYPOINT [ "/bin/bash" ]
+CMD ["/usr/local/bin/squashfs-root/AppRun"]

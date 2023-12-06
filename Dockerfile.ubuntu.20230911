@@ -1,0 +1,25 @@
+FROM ubuntu:23.10 
+LABEL maintainer "Angelo Claudio Re <rhacrsse@linux.com>"
+
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ENV HOME /home/user
+RUN useradd --create-home --home-dir $HOME user \
+	&& chown -R user:user $HOME
+
+COPY Dezor-v1.2.9-x86_64.AppImage /usr/local/bin/
+
+RUN chown -R user:user /usr/local/bin \
+    && chmod 0744 /usr/local/bin/Dezor-v1.2.9-x86_64.AppImage
+RUN apt -y update
+RUN apt install -y pipewire pipewire-alsa alsa-utils
+RUN apt install -y libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libgtk-3-0 libgbm1
+
+RUN cd /usr/local/bin/; ./Dezor-v1.2.9-x86_64.AppImage  --appimage-extract
+RUN chown -R user:user /usr/local/bin/squashfs-root
+
+WORKDIR $HOME
+USER user
+
+ENTRYPOINT [ "/bin/bash" ]
+CMD ["/usr/local/bin/squashfs-root/AppRun"]
