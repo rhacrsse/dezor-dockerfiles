@@ -1,4 +1,3 @@
-![dezor icon 1](imgs/dezor_icon_1.png)
 ![dezor icon 2](imgs/dezor_icon_2.png)
 # [DEZOR](https://www.dezor.net/): The web browser including VPN & Adblocker 
 
