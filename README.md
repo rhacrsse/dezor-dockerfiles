@@ -1,7 +1,6 @@
 ![dezor icon 1](imgs/dezor_icon_1.png)
-# DEZOR: The web browser including VPN & Adblocker 
-[official website](https://www.dezor.net/)
 ![dezor icon 2](imgs/dezor_icon_2.png)
+# [DEZOR](https://www.dezor.net/): The web browser including VPN & Adblocker 
 
 ## APPIMAGE
 Download the app image from [dezor download website section](https://www.dezor.net/#download) or from [repo](https://drive.google.com/file/d/1IqNPAut9uuo9uL9i-SFMjopgGwtwi2ST/view?usp=drive_link).
